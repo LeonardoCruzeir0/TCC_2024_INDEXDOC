@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IndexDoc{% endblock %}
+
+{% block body %}
+   <div class="login">
+    <div class="form_login">
+         {{ form_start(registrationForm) }}
+               
+                    <div> {{ form_errors(registrationForm) }}</div>
+              
+
+               
+                <br>
+                <h1 class="titulo">
+                <img  src="{{ asset('./img/logo.png') }}"><br>
+                IndexDoc</h1>
+                <div class="inputs_login">
+    
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, {
+                        label: 'Senha:'
+                    }) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+                </div>
+                <div class="titulo">
+                    <a href="{{ path('app_login') }}"> Deseja Fazer o login ?</a><br><br>
+                    <button class="btn btn-lg btn-primary" type="submit"><b>Registrar</b></button>
+                </div>
+            {{ form_end(registrationForm) }}
+        </div>
+        <div class="layout_login">
+        </div>
+    </div>
+    <div>
+    <div class="titulo">
+        Aluno : Leonardo de Souza Cruzeiro
+    </div>
+    </div>
+{% endblock %}

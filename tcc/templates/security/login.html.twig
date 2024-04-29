@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}IndexDoc{% endblock %}
+
+{% block body %}
+   <div class="login">
+    <div class="form_login">
+        <form method="post">
+               
+
+                {% if app.user %}
+                    <div class="mb-3">
+                        Você está logado como {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    </div>
+                {% endif %}
+                <br>
+                <h1 class="titulo">
+                 
+                <img  src="{{ asset('./img/logo.png') }}"><br>
+                IndexDoc</h1>
+                {% if error %}
+                    <div class="alert alert-danger" style="border-radius: 15px;text-align: center;">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                {% endif %}
+                <div class="inputs_login">
+                    <label for="username">E-mail:</label>
+                    <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="email" required autofocus>
+                    <label for="password">Senha:</label>
+                    <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+                    <input type="hidden" name="_csrf_token"value="{{ csrf_token('authenticate') }}">
+                </div>
+                <div class="titulo">
+                    <a href="{{ path('app_register') }}"> Deseja se Registra?</a><br><br>
+                    <button class="btn btn-lg btn-primary" type="submit"><b>Acessar</b></button>
+                </div>
+            </form>
+        </div>
+        <div class="layout_login">
+        </div>
+    </div>
+    <div>
+    <hr>
+    <div class="titulo">
+        Aluno : Leonardo de Souza Cruzeiro
+    </div>
+    </div>
+{% endblock %}

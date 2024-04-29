@@ -1,0 +1,75 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+{% block title %}ArquivosGED{% endblock %}
+{% block header %}
+{% endblock header %}
+
+{% block content_header %}
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/index.css') }}">
+<link rel="shortcut icon" href="{{ asset('./img/icon.png') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/buttons.dataTables.min.css') }}">
+
+{% endblock content_header %}
+
+{% block main %}
+
+
+
+
+        <h3 class='titulo'>Logs do sistema</h3>
+        <hr>
+        <table id="maintable" class="display compact cell-border" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>AÇÃO</th>
+                <th>DATA E HORA</th>
+                <th>USÚARIO</th>
+            </tr>
+        </thead>    
+        <tbody>
+        {% for documento in logs %}
+        <tr>
+            <td>{{documento.nome}}</td>
+            <td>{{documento.createdAt | date('d/m/Y h:i:s') }}</td>
+            <td>{{documento.user.email}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot style="background-color: #c0c0c0; color: #ffffff; font-size: 0.9em; ">
+            <tr>
+                <th>AÇÃO</th>
+                <th>DATA E HORA</th>
+                <th>USÚARIO</th>
+            </tr>
+        </tfoot>
+        
+    </table>
+    
+
+    <script type="text/javascript" src="{{ asset('./js/jquery-2.2.4.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/dataTables.buttons.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jszip.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/pdfmake.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/vfs_fonts.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.html5.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.print.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jquery.mark.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/datatables.mark.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.colVis.min.js') }}"></script>
+
+    </body>
+
+    </html>
+
+
+               
+{% endblock main %}
+
+{% block content_footer %}
+{% endblock content_footer %}
+
+
+

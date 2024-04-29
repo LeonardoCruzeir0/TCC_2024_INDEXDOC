@@ -1,0 +1,639 @@
+{% extends '@EasyAdmin/layout.html.twig' %}
+{% block title %}ArquivosGED{% endblock %}
+{% block header %}
+{% endblock header %}
+
+{% block content_header %}
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/index.css') }}">
+<link rel="shortcut icon" href="{{ asset('./img/icon.png') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/jquery.dataTables.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/dataTables.bootstrap.min.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('./css/buttons.dataTables.min.css') }}">
+
+{% endblock content_header %}
+
+{% block main %}
+
+
+
+{% if xy == 1 %}
+    <form method='post'>    
+        
+        <div class="index">
+            <div class = 'iframe'>
+            <input type="hidden" value="{{pdf.id}}" name="id_pdf">
+                
+            <div class='log_export'>
+            <button type="submit" name ='botao_volta' class="btn btn-primary" id='back'>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                    </svg>
+                </button>
+           
+            Exportado por :&nbsp;&nbsp;&nbsp;<u>{{pdf.user.email}}</u>&nbsp;&nbsp; em &nbsp;&nbsp;<u>{{pdf.createdAt | date('d/m/Y h:i:s' )}}</u></div>
+                <iframe src="{{link}}"></iframe>
+            </div>
+            <div class = 'form'>
+                <div class='titulo'>
+                    
+                    {% if yz == 0 and ay == 0 %}
+                   <br><h4 class='titulo'>Qual tipo do Documento?</h4><br>
+                        {% for index_alls in index_all %}
+                        
+                            <button type="submit" class="btn btn-primary" name ='index_button' value ="{{index_alls.id}}" id='btn_index_tipo' >{{index_alls.tipo}}</button>
+                        {% endfor %}
+                        <hr>
+                        <button type="submit" class="btn btn-primary" name ='botao_inserir' id='btn_index_tipo'>Novo tipo &nbsp;&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3z"/>
+                            </svg></button>
+                    {% endif %}
+                </div>
+                {% if ay == 1 %}
+                    {% if erro == 'erro'%}
+                            {{p}}
+                        {% endif %}
+                        {% if erro == 'ok'%}
+                            {{p}}
+                        {% endif %}
+                        <div class="doc">
+                        <input type="hidden" value="{{index_tipo.id}}" name="id_index">
+                        <h4 class='titulo'>
+                            {% if pdf.indexx == null %}
+                            {{ index_tipo.tipo }}
+                            {% endif %}
+                            
+                            {% if pdf.indexx != null %}
+                            {{ pdf.indexx.tipo }}
+                            {% endif %}
+                            
+                            {% if mx == 0 %}
+                            
+                                <button type="submit" id ="index_edit" name='index_edit'>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                    </svg>
+                                </button>
+                                <button type="submit" id='index_delet' name ='index_delet'> 
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                                    </svg>
+                                </button>
+                            {% endif %}
+                            {% if mx == 1 %}
+                            <br>
+                             <button type="submit" name ='delet_sim_index' class="btn btn-danger">Tem Certeza?</b>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                            </button>
+                            <button type="submit" name ='botao_cancel' class="btn btn-light"><b>Cancelar</b>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                                </svg>
+                            </button>
+                        <hr>
+                            {% endif %}
+
+                            </h4>
+                            <hr>
+                        {% if index_tipo.index1 != null %}
+                            <label>{{ index_tipo.index1 }}:</label>
+                            <input type="text" class="form-control" name= "doc1" value ="{{pdf.index1}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index2 != null %}
+                            <label>{{ index_tipo.index2 }}:</label>
+                            <input type="text" class="form-control" name= "doc2" value ="{{pdf.index2}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index3 != null %}
+                            <label>{{ index_tipo.index3 }}:</label>
+                            <input type="text" class="form-control" name= "doc3" value ="{{pdf.index3}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index4 != null %}
+                            <label>{{ index_tipo.index4 }}:</label>
+                            <input type="text" class="form-control" name= "doc4" value ="{{pdf.index4}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index5 != null %}
+                            <label>{{ index_tipo.index5 }}:</label>
+                            <input type="text" class="form-control" name= "doc5"   value ="{{pdf.index5}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index6 != null %}
+                            <label>{{ index_tipo.index6 }}:</label>
+                            <input type="text" class="form-control" name= "doc6"  value ="{{pdf.index6}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index7 != null %}
+                            <label>{{ index_tipo.index7 }}:</label>
+                            <input type="text" class="form-control" name= "doc7" value ="{{pdf.index7}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index8 != null %}
+                            <label>{{ index_tipo.index8 }}:</label>
+                            <input type="text" class="form-control" name= "doc8" value ="{{pdf.index8}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index9 != null %}
+                            <label>{{ index_tipo.index9 }}:</label>
+                            <input type="text" class="form-control" name= "doc9" value ="{{pdf.index9}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index10 != null %}
+                            <label>{{ index_tipo.index10 }}:</label>
+                            <input type="text" class="form-control" name= "doc10" value ="{{pdf.index10}}">
+                            <hr>
+                        {% endif %}
+
+                        <label>Ocr(Capa):</label>
+                        <div id='ocr'>
+                            {{pdf.nome}}
+                        </div>
+
+                        <br>
+
+                            <div class='dados_pesq'>
+                                <div style="text-align:center">
+                                    <button type="submit" class="btn btn-primary" name ='botao_doc' id="btn_index_export" >Salvar</button>&nbsp;&nbsp;
+                                    {% if  pdf.index1 != null    %}
+                                        <button type="submit" class="btn btn-light" name ='botao_cancel_index' id="btn_index_export">Limpar indexação</button>
+                                    {% endif %}
+                                    {% if  pdf.index1 == null    %}
+                                        <button class="btn btn-light" name ='botao_cancel' id="btn_index_export">Cancelar</button>
+                                    {% endif %}
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                {% endif %}
+                {% if ay == 2 %}   
+                    <div class="doc">
+                        <input type="hidden" value="{{index_tipo.id}}" name="id_index">
+                        <input type="hidden" value="{{pdf.id}}" name="id_pdf">
+                        <h4 class='titulo'>
+                            {% if pdf.indexx == null %}
+                                {{ index_tipo.tipo }}
+                            {% endif %}
+                            
+                            {% if pdf.indexx != null %}
+                                {{ pdf.indexx.tipo }}
+                            {% endif %}
+                        <hr>
+                        <h6 class='titulo'><u>Dados de pesquisa</u></h6>
+                        <br>
+                        {% if index_tipo.index1 != null %}
+                            <input type="text" class="form-control" name= "index1_" value ="{{index_tipo.index1}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index2 != null %}
+                            <input type="text" class="form-control" name= "index2_" value ="{{index_tipo.index2}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index3 != null %}
+                            <input type="text" class="form-control" name= "index3_" value ="{{index_tipo.index3}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index4 != null %}
+                            <input type="text" class="form-control" name= "index4_" value ="{{index_tipo.index4}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index5 != null %}
+                            <input type="text" class="form-control" name= "index5_" value ="{{index_tipo.index5}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index6 != null %}
+                            <input type="text" class="form-control" name= "index6_" value ="{{index_tipo.index6}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index7 != null %}
+                            <input type="text" class="form-control" name= "index7_" value ="{{index_tipo.index7}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index8 != null %}
+                            <input type="text" class="form-control" name= "index8_" value ="{{index_tipo.index8}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index9 != null %}
+                            <input type="text" class="form-control" name= "index9_" value ="{{index_tipo.index9}}">
+                            <hr>
+                        {% endif %}
+                        {% if index_tipo.index10 != null %}
+                            <input type="text" class="form-control" name= "index10_" value ="{{index_tipo.index10}}">
+                            <hr>
+                        {% endif %}
+                            <div class='dados_pesq'>
+                                <div style="text-align:center">
+                                    <button type="submit" class="btn btn-primary" name ='btn_index_edit' id="btn_index_edit" >Salvar</button>&nbsp;&nbsp;
+                                    <button class="btn btn-light" name ='botao_cancel' id="btn_index_export">Cancelar</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                {% endif %}        
+                {% if yz == 1 %}
+                    {% if erro == 'erro'%}
+                        {{p}}
+                    {% endif %}
+                    {% if erro == 'ok'%}
+                        {{p}}
+                    {% endif %}
+                    <br>
+                    <div class="tipo">
+                        <h6 class='titulo'><u>Tipo</u></h6>
+                        <input type="text" class="form-control" name= "tipo">
+                    </div>  
+                    <br>
+                    <h6 class='titulo'><u>Dados de pesquisa</u></h6>
+
+                    <div class ='dados_pesq'>
+                        
+                        <div id = 'index1' class='inds'>
+                        
+                            <input type="text" class="form-control" name= "index1">
+                            <a id = 'bot_1' onclick="open_index2()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_1_s' onclick="open_index2_s()"  class="btn btn-primary" style="display:none">-</a>
+                            
+                        </div>
+                    
+                        <div id = 'index2' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index2" >
+                            <a id = 'bot_2' onclick="open_index3()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_2_s' onclick="open_index3_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index3' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index3" >
+                            <a id = 'bot_3' onclick="open_index4()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_3_s' onclick="open_index4_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index4' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index4" >
+                            <a id = 'bot_4' onclick="open_index5()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_4_s' onclick="open_index5_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index5' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index5" >
+                            <a id = 'bot_5' onclick="open_index6()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_5_s' onclick="open_index6_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index6' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index6" >
+                            <a id = 'bot_6' onclick="open_index7()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_6_s' onclick="open_index7_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index7' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index7" >
+                            <a id = 'bot_7' onclick="open_index8()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_7_s' onclick="open_index8_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index8' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index8" >
+                            <a id = 'bot_8' onclick="open_index9()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_8_s' onclick="open_index9_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index9' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index9" >
+                            <a id = 'bot_9' onclick="open_index10()"  class="btn btn-primary">+</a>
+                            <a id = 'bot_9_s' onclick="open_index10_s()"  class="btn btn-primary" style="display:none">-</a>
+                        </div>
+
+                        <div id = 'index10' class='inds' style="display:none">
+                            <input type="text" class="form-control" name= "index10" >
+                            <a id = 'bot_10_s' onclick="open_index10_s()"  class="btn btn-primary">-</a>
+
+                        </div>
+                        <br>
+                        <div style="text-align:center">
+                            <button type="submit" class="btn btn-primary" name ='botao_salva' id="btn_index_export">Salvar</button>&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-light" name ='botao_cancel' id="btn_index_export">Cancelar</button><br>
+                        </div>
+                    </div>
+                    
+                {% endif %}  
+            </div>
+
+        </div>
+
+    </form>  
+     <form method='post'> 
+     {% if erro == 'erro'%}
+     <input type="hidden" value="{{index_tipo.id}}" name="id_index">
+                        <input type="hidden" value="{{pdf.id}}" name="id_pdf">
+        <div class="avisos_erro"><img  src="{{ asset('./img/erro.gif') }}" id= "img_erro"><br><y>{{p}}</y><hr><button class="btn btn-light" name ='botao_cancel' id="btn_index_export">Cancelar</button></div>
+    {% endif %}
+    {% if erro == 'ok' %}
+    </form>
+    
+    <a href="{{ path('app_tcc') }}"><div class="avisos"><img  src="{{ asset('./img/check.gif') }}"><br><y>{{p}}</y></div></a>
+    
+    {% endif %}
+    </form>            
+{% endif %}
+
+{% if xy == 0 %}
+
+    <h3 class='titulo'>Exporte pdf/a para criar Documentos para indexações</h3>
+    <br>
+    <form method="post" action="" enctype="multipart/form-data" >
+    <div class="export">
+        <input type="file"  name="file[]" multiple class="form-control" required>
+        <button type="submit"  name="botao_export" class="btn btn-primary" id="btn_index_export"><b>Exportar</b></button>
+        </div>
+    </form>
+    <hr>
+
+
+
+
+
+
+        <h3 class='titulo'>{{pagina_h4}}</h3>
+        <hr>
+        <table id="maintable" class="display compact cell-border" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>OCR</th>
+                <th>DATA DE EXPORTAÇÃO</th>
+                <th>QUATIDADE DE PÁGINA</th>
+                {% if index_find != null %}
+                    {% if index_find.index1 != null %}<th>{{index_find.index1}}</th>{% endif %}
+                    {% if index_find.index2 != null %}<th>{{index_find.index2}}</th>{% endif %}
+                    {% if index_find.index3 != null %}<th>{{index_find.index3}}</th>{% endif %}
+                    {% if index_find.index4 != null %}<th>{{index_find.index4}}</th>{% endif %}
+                    {% if index_find.index5 != null %}<th>{{index_find.index5}}</th>{% endif %}
+                    {% if index_find.index6 != null %}<th>{{index_find.index6}}</th>{% endif %}
+                    {% if index_find.index7 != null %}<th>{{index_find.index7}}</th>{% endif %}
+                    {% if index_find.index8 != null %}<th>{{index_find.index8}}</th>{% endif %}
+                    {% if index_find.index9 != null %}<th>{{index_find.index9}}</th>{% endif %}
+                    {% if index_find.index10 != null %}<th>{{index_find.index10}}</th>{% endif %}
+                {% endif %}
+                <th>AÇÃO</th>
+                
+                
+            </tr>
+        </thead>    
+        <tbody>
+        {% for documento in documentos %}
+        <tr>
+            <td class="ver_ocr">
+                <div class="ver_ocr">
+                    
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-menu-up" viewBox="0 0 16 16">
+                        <path d="M7.646 15.854a.5.5 0 0 0 .708 0L10.207 14H14a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3.793zM1 9V6h14v3zm14 1v2a1 1 0 0 1-1 1h-3.793a1 1 0 0 0-.707.293l-1.5 1.5-1.5-1.5A1 1 0 0 0 5.793 13H2a1 1 0 0 1-1-1v-2zm0-5H1V3a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1zM2 11.5a.5.5 0 0 0 .5.5h8a.5.5 0 0 0 0-1h-8a.5.5 0 0 0-.5.5m0-4a.5.5 0 0 0 .5.5h11a.5.5 0 0 0 0-1h-11a.5.5 0 0 0-.5.5m0-4a.5.5 0 0 0 .5.5h6a.5.5 0 0 0 0-1h-6a.5.5 0 0 0-.5.5"/>
+                        </svg> <b>Visualizar</b>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                        </svg>    
+                
+                </div>
+                <div class="ocr">
+                <hr>
+                    <p>{{documento.nome}}</p>
+                </div>
+                
+                
+            </td>
+            <td><div>{{documento.createdAt | date('d/m/Y h:i:s') }}</td>
+            <td><div>{{documento.qtd}}</div></td>
+            {% if documento.index1 != null %}<td><div>{{documento.index1}}</div></td>{% endif %}
+            {% if documento.index2 != null %}<td><div>{{documento.index2}}</div></td>{% endif %}
+            {% if documento.index3 != null %}<td><div>{{documento.index3}}</div></td>{% endif %}
+            {% if documento.index4 != null %}<td><div>{{documento.index4}}</div></td>{% endif %}
+            {% if documento.index5 != null %}<td><div>{{documento.index5}}</div></td>{% endif %}
+            {% if documento.index6 != null %}<td><div>{{documento.index6}}</div></td>{% endif %}
+            {% if documento.index7 != null %}<td><div>{{documento.index7}}</div></td>{% endif %}
+            {% if documento.index8 != null %}<td><div>{{documento.index8}}</div></td>{% endif %}
+            {% if documento.index9 != null %}<td><div>{{documento.index9}}</div></td>{% endif %}
+            {% if documento.index10 != null %}<td><div>{{documento.index10}}</div></td>{% endif %}
+            <td>
+                <form method='post'>
+                    <input type="hidden" name="id" value="{{documento.id}}" /> 
+
+                    {% if documento.indexx == null %}
+                        <button type="submit" name ='botao_index' class="btn btn-primary" id="btn_index_"><b>Indexar</b>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-text-indent-left" viewBox="0 0 16 16">
+                                <path d="M2 3.5a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5m.646 2.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L4.293 8 2.646 6.354a.5.5 0 0 1 0-.708M7 6.5a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m0 3a.5.5 0 0 1 .5-.5h6a.5.5 0 0 1 0 1h-6a.5.5 0 0 1-.5-.5m-5 3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5"/>
+                            </svg>
+                        </button>
+                    {% endif %}
+                    {% if documento.indexx != null %}
+                        <input type="hidden" value="{{documento.indexx.id}}" name="id_index">
+                        <button type="submit" name ='botao_index_edit' class="btn btn-light"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                                    <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+                                </svg><b>Editar e Visualizar</b> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                        </svg>
+                            
+                        </button>
+                    {% endif %}
+                    {% if ky == 0 %}
+                    <button type="submit" name ='delet' class="btn btn-danger" value ="{{documento.id}}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                            <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                        </svg>
+                    </button>
+                    {% endif %}
+                    {% if ky == 1 and pdf.id == documento.id %}
+                    
+                        <button type="submit" name ='delet_sim' class="btn btn-danger">Tem Certeza?</b>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+                                <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"/>
+                            </svg>
+                        </button>
+                        <button type="submit" name ='delet_cancel' class="btn btn-light"><b>Cancelar</b>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
+                            </svg>
+                        </button>
+                    {% endif %}
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot style="background-color: #c0c0c0; color: #ffffff; font-size: 0.9em; ">
+            <tr>
+                <th>OCR</th>
+                <th>DATA DE EXPORTAÇÃO</th>
+                <th>QUATIDADE DE PÁGINA</th>
+                {% if index_find != null %}
+                    {% if index_find.index1 != null %}<th>{{index_find.index1}}</th>{% endif %}
+                    {% if index_find.index2 != null %}<th>{{index_find.index2}}</th>{% endif %}
+                    {% if index_find.index3 != null %}<th>{{index_find.index3}}</th>{% endif %}
+                    {% if index_find.index4 != null %}<th>{{index_find.index4}}</th>{% endif %}
+                    {% if index_find.index5 != null %}<th>{{index_find.index5}}</th>{% endif %}
+                    {% if index_find.index6 != null %}<th>{{index_find.index6}}</th>{% endif %}
+                    {% if index_find.index7 != null %}<th>{{index_find.index7}}</th>{% endif %}
+                    {% if index_find.index8 != null %}<th>{{index_find.index8}}</th>{% endif %}
+                    {% if index_find.index9 != null %}<th>{{index_find.index9}}</th>{% endif %}
+                    {% if index_find.index10 != null %}<th>{{index_find.index10}}</th>{% endif %}
+                {% endif %}
+                <th>AÇÃO</th>
+                
+            </tr>
+        </tfoot>
+        
+    </table>
+    {% if erro == 'erro'%}
+        {{p}}
+    {% endif %}
+    {% if erro == 'ok' %}
+
+    
+    <a href="{{ path('app_tcc') }}"><div class="avisos"><img  src="{{ asset('./img/check.gif') }}"><br><y>{{p}}</y></div></a>
+    
+    {% endif %}
+
+
+    <script type="text/javascript" src="{{ asset('./js/jquery-2.2.4.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jquery.dataTables.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/dataTables.buttons.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jszip.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/pdfmake.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/vfs_fonts.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.html5.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.print.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/app.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/jquery.mark.min.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/datatables.mark.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('./js/buttons.colVis.min.js') }}"></script>
+
+    </body>
+
+    </html>
+{% endif %}
+
+<script>
+    function open_index2() {
+
+        document.getElementById("bot_1").style.display = "none";
+        document.getElementById("index2").style.display = "flex";
+        document.getElementById("bot_1_s").style.display = "flex";
+
+     }
+     
+                function open_index2_s() {
+                    document.getElementById("bot_1").style.display = "flex";
+                    document.getElementById("index2").style.display = "none";
+                    document.getElementById("bot_1_s").style.display = "none";
+
+                }
+
+                function open_index3() {
+                    document.getElementById("bot_2").style.display = "none";
+                    document.getElementById("index3").style.display = "flex";
+                    document.getElementById("bot_2_s").style.display = "flex";
+
+                }
+
+                function open_index3_s() {
+                    document.getElementById("bot_2").style.display = "flex";
+                    document.getElementById("index3").style.display = "none";
+                    document.getElementById("bot_2_s").style.display = "none";
+
+                }
+
+                function open_index4() {
+                    document.getElementById("bot_3").style.display = "none";
+                    document.getElementById("index4").style.display = "flex";
+                    document.getElementById("bot_3_s").style.display = "flex";
+
+                }
+
+                function open_index4_s() {
+                    document.getElementById("bot_3").style.display = "flex";
+                    document.getElementById("index4").style.display = "none";
+                    document.getElementById("bot_3_s").style.display = "none";
+
+                }
+
+                function open_index5() {
+                    document.getElementById("bot_4").style.display = "none";
+                    document.getElementById("index5").style.display = "flex";
+                    document.getElementById("bot_4_s").style.display = "flex";
+
+                }
+
+                function open_index5_s() {
+                    document.getElementById("bot_4").style.display = "flex";
+                    document.getElementById("index5").style.display = "none";
+                    document.getElementById("bot_4_s").style.display = "none";
+
+                }
+                
+                function open_index6() {
+                    document.getElementById("bot_5").style.display = "none";
+                    document.getElementById("index6").style.display = "flex";
+                    document.getElementById("bot_5_s").style.display = "flex";
+
+                }
+
+                function open_index6_s() {
+                    document.getElementById("bot_5").style.display = "flex";
+                    document.getElementById("index6").style.display = "none";
+                    document.getElementById("bot_5_s").style.display = "none";
+
+                }
+
+                function open_index7() {
+                    document.getElementById("bot_6").style.display = "none";
+                    document.getElementById("index7").style.display = "flex";
+                    document.getElementById("bot_6_s").style.display = "flex";
+
+                }
+
+                function open_index7_s() {
+                    document.getElementById("bot_6").style.display = "flex";
+                    document.getElementById("index7").style.display = "none";
+                    document.getElementById("bot_6_s").style.display = "none";
+
+                }
+                
+                function open_index8() {
+                    document.getElementById("bot_7").style.display = "none";
+                    document.getElementById("index8").style.display = "flex";
+                    document.getElementById("bot_7_s").style.display = "flex";
+
+                }
+
+                function open_index8_s() {
+                    document.getElementById("bot_7").style.display = "flex";
+                    document.getElementById("index8").style.display = "none";
+                    document.getElementById("bot_7_s").style.display = "none";
+
+                }
+
+                function open_index9() {
+                    document.getElementById("bot_8").style.display = "none";
+                    document.getElementById("index9").style.display = "flex";
+                    document.getElementById("bot_8_s").style.display = "flex";
+
+                }
+
+                function open_index9_s() {
+                    document.getElementById("bot_8").style.display = "flex";
+                    document.getElementById("index9").style.display = "none";
+                    document.getElementById("bot_8_s").style.display = "none";
+
+                }
+</script>                
+{% endblock main %}
+
+{% block content_footer %}
+{% endblock content_footer %}
+
+
+
